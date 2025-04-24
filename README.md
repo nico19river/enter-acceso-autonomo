@@ -1,11 +1,8 @@
-# ENTER
+# ENTER 🛡️ Control de Accesos
 Sistema de Control de Accesos para Barrios Cerrados
-
-# 🛡️ Control de Accesos UNAB
 
 ![Estado del Proyecto](https://img.shields.io/badge/status-en%20desarrollo-yellow)
 ![Lenguaje Principal](https://img.shields.io/badge/backend-Python-blue)
-Este proyecto académico fue desarrollado para la materia **Desarrollo de Software** de la **Universidad Nacional Guillermo Brown (UNAB)**.
 
 
 ## 🚀 Visión del Proyecto
@@ -35,7 +32,10 @@ Este proyecto fue desarrollado por un equipo de 6 integrantes de la carrera de T
 📅 **Inicio:** Abril 2025  
 📅 **Finalización estimada:** Junio 2025  
 📚 **Materia:** Desarrollo de Software | Tecnicatura Universitaria en Programación
-📚 **Docente a cargo:** Romina Romero
+📚 **Docente a cargo:** Ing. Romina Romero
+
+Este proyecto fue desarrollado para la materia **Desarrollo de Software** de la **Universidad Nacional Guillermo Brown (UNAB)**.
+
 
 
 
