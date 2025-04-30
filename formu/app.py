@@ -29,7 +29,7 @@ def inicializar_db():
 
 inicializar_db()
 
-@app.route("/")
+@app.route("/formulario")
 def formulario():
     return render_template("formulario.html")  
 
@@ -53,7 +53,7 @@ def registrar_visita():
     cursor = conexion.cursor()
     print("Datos a insertar:", datos)
     cursor.execute("""
-        INSERT INTO visitas (nombre, dni, propietario, motivo, marca, modelo, color, patente, fecha_ingreso, hora_salida, hora_ingreso)
+        INSERT INTO visitas (nombre, dni, propietario, motivo, marca, modelo, color, patente, fecha_ingreso, hora_ingreso, hora_salida)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, datos)
     conexion.commit()
@@ -69,7 +69,7 @@ def confirmacion():
 def listar_visitas():
     conexion = sqlite3.connect('visitas.db')
     cursor = conexion.cursor()
-    cursor.execute("SELECT nombre, dni, propietario, motivo, marca, modelo, color, patente, fecha_ingreso, hora_salida, hora_ingreso FROM visitas ORDER BY fecha DESC, id DESC")
+    cursor.execute("SELECT nombre, dni, propietario, motivo, marca, modelo, color, patente, fecha_ingreso, hora_salida, hora_ingreso FROM visitas ORDER BY fecha_ingreso DESC, id DESC")
     visitas = cursor.fetchall()
     conexion.close()
     return render_template("listar_visitas.html", visitas=visitas)
