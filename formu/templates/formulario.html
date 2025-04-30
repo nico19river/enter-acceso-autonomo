@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ingreso de Visita</title>
-    <link rel="stylesheet" href="/static/css/estilos.css">
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
 <body>
     <h1>Formulario de Ingreso - Barrio Cerrado</h1>
@@ -71,7 +70,7 @@
         <button type="submit">Registrar Ingreso</button>
     </form>
 
-        <script src="/static/javascript/funciones.js" defer></script>
+    <script src="{{ url_for('static', filename='javascript/funciones.js') }}" defer></script>
 
 </body>
 </html>
