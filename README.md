@@ -24,7 +24,7 @@ Este proyecto fue desarrollado por un equipo de 6 integrantes de la carrera de T
 - 👤 Nombre 2
 - 👤 Nombre 3
 - 👤 Nombre 4
-- 👤 Nombre 5
+- 👤 Milagros Medrano
 - 👤 Mayra Artoni
 
 ## 🕒 Duración del Proyecto
