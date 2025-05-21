@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 app.register_blueprint(crud_visitas, url_prefix='/visitas')
 
-@app.route ('/')
+@app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
     
 
 @app.route ('/login')

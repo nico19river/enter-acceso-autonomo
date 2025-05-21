@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Panel izquierdo →  logo + copy */
+.left-panel {
+  width: 66.666%; /* 4/6 de la pantalla */
+  background: linear-gradient(270deg, #FFFFFF 0.95%, #B1B2B5 98.3%);
+  display: flex;
+  padding: 40px;
+  padding-left: 100px; /* espacio interno (padding) en borde izquierdo */
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column; /* apila verticalmente */
+  justify-content: center;
+  align-items: flex-start; /* alinea a la izquierda */
+  text-align: left;
+  padding: 40px;
+  max-width: 800px; /* ancho máximo opcional */
+}
+
+.texto-copy {
+  font-size: 25px;
+  line-height: 1.5;     /* Para que el texto sea más legible */
+  text-align: justify;  /* Para justificar el texto */
+}
+
+.logo {
+
+  width: 400px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+/* Panel derecho →  formulario */
+.right-panel {
+  width: 33.333%; /* 2/6  de la pantalla*/
+  background-color: #1A1D29;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 320px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form h2 {
+  font-family: 'Questrial', sans-serif;
+  font-size: 30px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.login-form label {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.login-form input {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.login-form button {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #C4C4C4;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.login-form button:hover {
+  background-color: #aaaaaa;
+}

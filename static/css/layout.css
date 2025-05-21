@@ -1,0 +1,22 @@
+/* Reset general */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tipografía base */
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Estilos comunes reutilizables */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  font-family: 'Questrial', sans-serif;
+}

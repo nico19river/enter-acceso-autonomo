@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Sitio{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon" />
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Questrial&display=swap" rel="stylesheet" />
+
+  <!-- CSS principal -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+{% block extra_styles %}{% endblock %}
 </head>
 <body>
-    <h1>TEXTO DE PRUEBA</h1>
-    {% block body %}
-    {% endblock %}
-    <script src="{{ url_for('static', filename='js/layout.js') }}"></script>
+  {% block body %}
+  <!-- Aquí va el contenido específico de cada página -->
+  {% endblock %}
+
+  <!-- Scripts opcionales -->
+  <script src="{{ url_for('static', filename='js/layout.js') }}"></script>
 </body>
 </html>
