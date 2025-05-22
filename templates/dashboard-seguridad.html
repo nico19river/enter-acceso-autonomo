@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block title %}DASH SEGURIDAD{% endblock %}
+
+{% block body %}
+  <h1>PANEL SEGURIDAD</h1>
+  <a href="{{ url_for('validacion_usuarios.logout') }}" style="color:blue; font-weight:bold;">Cerrar sesión</a>
+{% endblock %}
