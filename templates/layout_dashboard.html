@@ -20,7 +20,7 @@
         <div>{{ session.get('user_type', '') }}</div>
       </button>
       <ul id="dropdown">
-        <li><a href="#">Perfil</a></li>
+        <li><a href="#">Perfil</a></li> <!--TODO crear pagina y agregar ruta a perfil-->
         <li><a href="{{ url_for('validacion_usuarios.logout') }}">Cerrar sesión</a></li>
       </ul>
     </div>
@@ -36,10 +36,10 @@
             <li><a href="#" data-section="borrar-usuario">Borrar usuario</a></li>
             <li><a href="#" data-section="listar-usuarios">Ver usuarios</a></li>
             <!-- TODO poner todo dentro de "gestion usuario y hacer un desplegable para opciones o otra pantalla"-->
-          {% elif session.get('user_type') == 'prop' %}
+          {% elif session.get('user_type') == 'propietario' %}
             <li><a href="#" data-section="enviar-invitacion">Enviar invitación</a></li>
             <li><a href="#" data-section="llave-virtual">Llave virtual</a></li> <!--crear el QR de acceso al barrio-->
-            {% elif session.get('user_type') == 'segu' %}
+          {% elif session.get('user_type') == 'seguridad' %}
             <li><a href="#" data-section="escanear-QR-acceso">Escanear QR</a></li>
             <li><a href="#" data-section="registrar-acceso-manual">Registrar acceso</a></li>
           {% endif %}

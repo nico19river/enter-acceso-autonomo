@@ -1,8 +1,8 @@
-{% extends "layout.html" %}
+{% extends "layout_dashboard.html" %}
 
-{% block title %}DASH PROPIETARIO{% endblock %}
+{% block title %}Dashboard PROPIETARIO{% endblock %}
 
-{% block body %}
-  <h1>PANEL PROPIETARIO</h1>
-  <a href="{{ url_for('validacion_usuarios.logout') }}" style="color:blue; font-weight:bold;">Cerrar sesión</a>
+
+{% block contenido_especifico %}
+  <h1>Panel PROPIETARIO</h1>
 {% endblock %}
