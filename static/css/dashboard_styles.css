@@ -1,0 +1,180 @@
+/* ----------------------------- */
+/* Estilos: Header y Logo       */
+/* ----------------------------- */
+
+header {
+  background-color: white;
+  padding: 1rem 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.logo-letras {
+  height: 60px;             /* Más chico que el icono */
+  width: auto;
+}
+
+/* ----------------------------- */
+/* Estilos: Menú Usuario     */
+/* ----------------------------- */
+
+.user-menu {
+  position: relative;
+  display: inline-block; /* Para que el ancho dependa del contenido */
+}
+
+#user-button {
+  background-color: #1A1D29;       
+  border: none;                 
+  border-radius: 30px;          
+  padding: 1rem 3rem;           
+  cursor: pointer;
+  text-align: right;
+  display: inline-block;       
+  min-width: 250px; /* Ancho mínimo para que quede uniforme */
+  box-sizing: border-box;
+  position: relative;
+  z-index: 20; /* Para que quede por encima del dropdown */
+  
+}
+
+/* Estados de texto dentro del botón */
+#user-button div:first-child {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-family:  "Outfit", sans-serif;;
+  font-weight: bold;
+  color: #c4c4c4;
+}
+
+#user-button div:last-child {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #2c1eaf;
+}
+
+/* Estado activo del botón */
+#user-button.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ----------------------------- */
+/* Estilos: Dropdown del Usuario */
+/* ----------------------------- */
+
+#dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  background: #1A1D29; /* Mismo color que el botón */
+  list-style: none;
+  margin: 0;
+  padding: 1rem 3rem;
+  padding-top: 4rem;
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  width: 100%; /* Igual que el botón */
+  box-sizing: border-box;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+}
+
+#dropdown.show {
+  display: block;
+}
+
+#dropdown li {
+  padding: 0.5rem 0rem;
+}
+
+#dropdown li a {
+  color: #c4c4c4;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  font-weight: bold;       /* Negrita */
+  white-space: nowrap;     /* Una sola línea */
+  text-align: right;
+}
+
+/* Hover en opciones */
+#dropdown li:hover,
+#dropdown li a:hover {
+  color: #2c1eaf;
+}
+
+/* ----------------------------- */
+/* contenedor nav y main dinamico */
+/* ----------------------------- */
+
+.contenedor-main {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 100px); /* Ajustá este valor si tu header es más alto */
+}
+
+/* ----------------------------- */
+/* navbar */
+/* ----------------------------- */
+
+.side-navbar {
+  width: 250px;
+  flex-shrink: 0; /* Impide que el ancho se reduzca si el contenido cambia */
+  background-color: #1A1D29;
+  padding: 2rem 2rem;
+  box-sizing: border-box;
+  color: white;
+}
+
+.side-navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-navbar li {
+  margin-bottom: 1.5rem;
+}
+
+.side-navbar a {
+  font-size: large;
+  color: #c4c4c4;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+
+.side-navbar a:hover {
+  color: #2c1eaf;
+}
+
+
+/* ----------------------------- */
+/* main dinamico */
+/* ----------------------------- */
+
+.main-dinamico {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+}
+
+/*
+Agregar imagen de fondo para cuando el main esta inactivo
+
+.main-dinamico.inactivo {
+}
+
+*/

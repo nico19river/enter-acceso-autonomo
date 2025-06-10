@@ -1,8 +1,9 @@
-{% extends "layout.html" %}
+{% extends "layout_dashboard.html" %}
 
-{% block title %}DASH ADMINISTRADOR{% endblock %}
+{% block title %}Dashboard Admin{% endblock %}
 
-{% block body %}
-  <h1>PANEL ADMIN</h1>
-  <a href="{{ url_for('validacion_usuarios.logout') }}" style="color:blue; font-weight:bold;">Cerrar sesión</a>
+
+{% block contenido_especifico %}
+  <h1>Panel de Administración</h1>
+  <p>Contenido específico del admin...</p>
 {% endblock %}

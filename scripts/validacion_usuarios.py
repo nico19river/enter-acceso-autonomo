@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 import sqlite3
+from database import *
+
+
 
 #crea el blueprint para llamarlo desde app.py
 validacion_usuarios = Blueprint('validacion_usuarios', __name__)
@@ -8,7 +11,7 @@ validacion_usuarios = Blueprint('validacion_usuarios', __name__)
 #TODO hashear password
 
 def get_user(email, password):
-    conn = sqlite3.connect('users.db') #inicia la conexion
+    conn = sqlite3.connect('database/users.db') #inicia la conexion
     cursor = conn.cursor() 
     cursor.execute("SELECT id, username, email, password, user_type FROM users WHERE email = ? AND password = ?", (email, password))
     #apunta el cursor a el usuario si coinciden pass y email
@@ -27,6 +30,7 @@ def validar_usuario():
         if user: #si el usuario existe :
             session['user_id'] = user[0] #userID en la tabla
             session['user_type'] = user[4] #Rol de usuario en la tabla
+            session['username'] = user[1] # username en la tabla
             #durante toda la sesión se recuerda quién está logueado y qué permisos tiene.
 
             if user[4] == 'admin':
