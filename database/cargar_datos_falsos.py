@@ -29,19 +29,27 @@ def cargar_datos(ruta_db):
     # Insertar 36 propietarios distribuidos en los 10 lotes
     propietarios_ids = []
     for i in range(36):
-        nombre = fake.first_name()
-        apellido = fake.last_name()
-        email = fake.unique.email()
-        cursor.execute("""
-            INSERT INTO usuarios (nombre, apellido, email, password, rol_usuario, id_barrio)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (nombre, apellido, email, "prop123", "propietario", id_barrio))
-        id_usuario = cursor.lastrowid
-        propietarios_ids.append(id_usuario)
+         nombre = fake.first_name()
+    apellido = fake.last_name()
+    email = fake.unique.email()
+    pin_acceso = str(fake.random_int(min=1000, max=9999))
+    pin_seguridad = str(fake.random_int(min=1000, max=9999))
+    password = "prop123"
+
+    cursor.execute("""
+        INSERT INTO usuarios (nombre, apellido, email, password, rol_usuario, id_barrio, pin_acceso, pin_seguridad, bloqueado, intentos_fallidos)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (nombre, apellido, email, password,
+        "propietario", id_barrio,
+        pin_acceso, pin_seguridad, False, 0 ))
+
+    id_usuario = cursor.lastrowid
+    propietarios_ids.append(id_usuario)
+        
         # Asignar a uno o varios lotes al azar (al menos uno)
-        lotes_asignados = random.sample(lotes_ids, random.randint(1, 3))
-        for lote_id in lotes_asignados:
-            cursor.execute("INSERT INTO usuarios_lotes (id_usuario, id_lote) VALUES (?, ?)", (id_usuario, lote_id))
+    lotes_asignados = random.sample(lotes_ids, random.randint(1, 3))
+    for lote_id in lotes_asignados:
+        cursor.execute("INSERT INTO usuarios_lotes (id_usuario, id_lote) VALUES (?, ?)", (id_usuario, lote_id))
 
     # Insertar 5 seguridad
     seguridad_ids = []

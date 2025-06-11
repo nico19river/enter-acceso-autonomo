@@ -23,6 +23,10 @@ CREATE TABLE usuarios (
     password TEXT NOT NULL, -- TODO hashear
     rol_usuario TEXT NOT NULL, -- Esperados: 'propietario', 'admin', 'seguridad'
     id_barrio INTEGER NOT NULL,
+    pin_acceso TEXT,             -- PIN de acceso válido
+    pin_seguridad TEXT,          -- PIN que alerta silenciosa
+    intentos_fallidos INTEGER DEFAULT 0, -- Cantidad de intentos fallido para bloquear el sistema 
+    bloqueado BOOLEAN DEFAULT 0, --default False
     FOREIGN KEY (id_barrio) REFERENCES barrios(id_barrio)
 );
 
@@ -57,7 +61,7 @@ CREATE TABLE accesos (
     fecha_hora_salida TEXT,
     estado TEXT NOT NULL DEFAULT 'noAprobado', 
     -- Valores esperados: 'noAprobado', 'enCurso', 'finalizado'
-    
+    TEXT NOT NULL DEFAULT 'manual' --inicializa por defecto en 'manual' para los accesos que no tienen qr    
     dni_visitante TEXT NOT NULL,
     dni_acompañantes TEXT, -- Lista de DNIs separados por coma (si hay)
     cantidad_acompañantes INTEGER DEFAULT 0, -- Puede ser 0 o más
