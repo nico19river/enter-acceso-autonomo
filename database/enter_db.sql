@@ -61,7 +61,7 @@ CREATE TABLE accesos (
     fecha_hora_salida TEXT,
     estado TEXT NOT NULL DEFAULT 'noAprobado', 
     -- Valores esperados: 'noAprobado', 'enCurso', 'finalizado'
-    TEXT NOT NULL DEFAULT 'manual' --inicializa por defecto en 'manual' para los accesos que no tienen qr    
+    token_qr TEXT NOT NULL DEFAULT 'manual' --inicializa por defecto en 'manual' para los accesos que no tienen qr    
     dni_visitante TEXT NOT NULL,
     dni_acompañantes TEXT, -- Lista de DNIs separados por coma (si hay)
     cantidad_acompañantes INTEGER DEFAULT 0, -- Puede ser 0 o más
@@ -70,4 +70,14 @@ CREATE TABLE accesos (
     
     FOREIGN KEY (id_invitacion) REFERENCES invitaciones(id_invitacion),
     FOREIGN KEY (id_guardia) REFERENCES usuarios(id_usuario)
+);
+
+-- Tabla para gestionar las llaves virtuales temporales de los residentes
+CREATE TABLE llaves_virtuales (
+    id_llave INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_usuario INTEGER NOT NULL,      -- El residente que generó la llave
+    token TEXT NOT NULL UNIQUE,       -- El token único del QR
+    fecha_expiracion TEXT NOT NULL,   -- Cuándo deja de ser válida
+    estado TEXT NOT NULL DEFAULT 'valida', -- 'valida', 'usada'
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
