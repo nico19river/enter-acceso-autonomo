@@ -1,0 +1,61 @@
+<form id="pin-form">
+  <input type="password" name="pin_ingresado" placeholder="Ingresá tu PIN" required maxlength="10" />
+  <input type="hidden" name="id_usuario" value="{{ session['id_usuario'] }}" />
+  <button type="submit">Generar QR</button>
+</form>
+
+<div id="mensaje"></div>
+<div id="qr-container"></div>
+
+<script>
+  // Esta función prepara el formulario, la llamamos después de insertar el HTML
+  function prepararFormularioPin() {
+    const form = document.getElementById('pin-form');
+    const mensaje = document.getElementById('mensaje');
+    const qrContainer = document.getElementById('qr-container');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      mensaje.textContent = '';
+      qrContainer.innerHTML = '';
+
+      const formData = new FormData(form);
+      const data = new URLSearchParams(formData);
+
+      try {
+        const res = await fetch('/generar-qr', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: data
+        });
+
+        const json = await res.json();
+
+        if (res.ok && json.status === 'ok') {
+          mensaje.textContent = 'Llave virtual generada con éxito.';
+          if (json.alerta) {
+            mensaje.className = 'alerta';
+            mensaje.textContent += ' (Alerta de seguridad activada)';
+          } else {
+            mensaje.className = '';
+          }
+          qrContainer.innerHTML = `<img src="data:image/png;base64,${json.qr}" alt="QR generado" />`;
+        } else {
+          mensaje.className = 'error';
+          mensaje.textContent = json.message || 'Error desconocido';
+        }
+      } catch (error) {
+        mensaje.className = 'error';
+        mensaje.textContent = 'Error al generar QR: ' + error.message;
+      }
+    });
+  }
+
+  // Llamamos a la función una vez que el script se carga
+  prepararFormularioPin();
+</script>

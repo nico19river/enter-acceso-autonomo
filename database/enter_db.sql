@@ -30,6 +30,17 @@ CREATE TABLE usuarios (
     FOREIGN KEY (id_barrio) REFERENCES barrios(id_barrio)
 );
 
+-- Tabla Vehículos asociados a usuarios (1 usuario puede tener varios vehículos)
+CREATE TABLE vehiculos (
+    id_vehiculo INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_usuario INTEGER NOT NULL,
+    marca TEXT NOT NULL,
+    modelo TEXT NOT NULL,
+    color TEXT NOT NULL,
+    patente TEXT NOT NULL UNIQUE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
 -- Tabla intermedia: relación usuarios-lotes (muchos a muchos)
 CREATE TABLE usuarios_lotes (
     id_usuario INTEGER NOT NULL,
@@ -61,7 +72,7 @@ CREATE TABLE accesos (
     fecha_hora_salida TEXT,
     estado TEXT NOT NULL DEFAULT 'noAprobado', 
     -- Valores esperados: 'noAprobado', 'enCurso', 'finalizado'
-    token_qr TEXT NOT NULL DEFAULT 'manual' --inicializa por defecto en 'manual' para los accesos que no tienen qr    
+    token_qr TEXT NOT NULL DEFAULT 'manual', --inicializa por defecto en 'manual' para los accesos que no tienen qr    
     dni_visitante TEXT NOT NULL,
     dni_acompañantes TEXT, -- Lista de DNIs separados por coma (si hay)
     cantidad_acompañantes INTEGER DEFAULT 0, -- Puede ser 0 o más
@@ -77,6 +88,7 @@ CREATE TABLE llaves_virtuales (
     id_llave INTEGER PRIMARY KEY AUTOINCREMENT,
     id_usuario INTEGER NOT NULL,      -- El residente que generó la llave
     token TEXT NOT NULL UNIQUE,       -- El token único del QR
+    fecha_creacion TEXT NOT NULL DEFAULT (datetime('now'))
     fecha_expiracion TEXT NOT NULL,   -- Cuándo deja de ser válida
     estado TEXT NOT NULL DEFAULT 'valida', -- 'valida', 'usada'
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)

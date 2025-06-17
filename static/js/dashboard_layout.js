@@ -37,22 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // FUNCIÓN PRINCIPAL PARA CARGAR SECCIONES
   function cargarSeccion(section) {
-    fetch(`/${section}`)
-      .then(response => {
-        if (!response.ok) throw new Error(`No se pudo cargar la sección: ${section}`);
-        return response.text();
-      })
-      .then(html => {
-        main.innerHTML = html;
-        if (section === 'borrar-usuario') {
-          prepararFormularioBorrarUsuario(); // Inicializá el formulario si es esa sección
+  fetch(`/${section}`)
+    .then(response => {
+      if (!response.ok) throw new Error(`No se pudo cargar la sección: ${section}`);
+      return response.text();
+    })
+    .then(html => {
+      main.innerHTML = html;
+
+      // Ejecutar scripts inline o externos que estén en el HTML cargado dinámicamente
+      const scripts = main.querySelectorAll('script');
+      scripts.forEach(oldScript => {
+        const newScript = document.createElement('script');
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
+        } else {
+          newScript.textContent = oldScript.textContent;
         }
-      })
-      .catch(error => {
-        console.error(error);
-        main.innerHTML = '<p>Error al cargar la sección.</p>';
+        document.body.appendChild(newScript);
+        document.body.removeChild(newScript);
       });
-  }
+
+      if (section === 'borrar-usuario') {
+        prepararFormularioBorrarUsuario(); // Inicializá el formulario si es esa sección
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      main.innerHTML = '<p>Error al cargar la sección.</p>';
+    });
+}
 
   // PREPARAR EL FORMULARIO DE BORRAR USUARIO
   function prepararFormularioBorrarUsuario() {

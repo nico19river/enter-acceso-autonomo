@@ -1,0 +1,11 @@
+{% extends "layout_dashboard.html" %}
+
+{% block title %}QR Escaneado{% endblock %}
+
+{% block contenido_especifico %}
+  <div class="qr-acceso">
+    <h2>✅ Acceso concedido</h2>
+    <p><strong>ID Usuario:</strong> {{ id_usuario }}</p>
+    <p><strong>Fecha y hora:</strong> {{ fecha_hora }}</p>
+  </div>
+{% endblock %}

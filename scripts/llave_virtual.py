@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from flask import jsonify, request  
 import qrcode
 from config import APP_DOMAIN
+from database.utils_db import get_db_connection
 
 # - NB
 def _verificar_pin_usuario(usuario, pin_ingresado):
