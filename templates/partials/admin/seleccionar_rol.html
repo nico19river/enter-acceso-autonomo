@@ -1,0 +1,69 @@
+<style>
+    /* Estilos simples para las tarjetas de selección de rol */
+    .seleccion-rol-contenedor {
+        padding: 2rem;
+        text-align: center;
+    }
+    .titulo-seleccion {
+        margin-bottom: 2rem;
+        font-weight: bold;
+    }
+    .opciones-rol {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    .opcion-rol {
+        display: block;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        padding: 2rem;
+        width: 250px;
+        text-decoration: none;
+        color: #333;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .opcion-rol:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        color: #2c1eaf;
+    }
+    .opcion-rol h5 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    .opcion-rol p {
+        font-size: 0.9rem;
+        color: #777;
+    }
+</style>
+
+<div class="seleccion-rol-contenedor">
+    <h4 class="titulo-seleccion">Seleccione el Tipo de Usuario a Crear</h4>
+
+    <div class="opciones-rol">
+        
+        <!-- Tarjeta para crear Propietario -->
+        <a href="#" class="opcion-rol" data-section="crear-usuario-form/propietario">
+            <h5>Propietario</h5>
+            <p>Usuarios que residen en el barrio y tienen acceso a la llave virtual e invitaciones.</p>
+        </a>
+
+        <!-- Tarjeta para crear Administrador -->
+        <a href="#" class="opcion-rol" data-section="crear-usuario-form/admin">
+            <h5>Administrador</h5>
+            <p>Usuarios con acceso total al sistema para gestionar barrios, lotes y usuarios.</p>
+        </a>
+
+        <!-- Tarjeta para crear Seguridad -->
+        <a href="#" class="opcion-rol" data-section="crear-usuario-form/seguridad">
+            <h5>Seguridad</h5>
+            <p>Personal de guardia para el control de acceso, escaneo de QR y registros manuales.</p>
+        </a>
+
+    </div>
+</div>

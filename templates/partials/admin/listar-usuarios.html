@@ -1,0 +1,35 @@
+<h2>Lista de Usuarios</h2>
+
+<!-- Filtro de rol -->
+<select id="filtro-rol" name="rol">
+  <option value="">Todos</option>
+  <option value="admin">Admin</option>
+  <option value="propietario">Propietario</option>
+  <option value="seguridad">Seguridad</option>
+</select>
+
+<!-- Aquí se inyecta la tabla -->
+<div id="tabla-usuarios">
+  {% include 'partials/admin/tabla_usuarios.html' %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const filtroRol = document.getElementById('filtro-rol');
+  filtroRol.addEventListener('change', () => {
+    const rolSeleccionado = filtroRol.value;
+
+    fetch(`/listar-usuarios?rol=${rolSeleccionado}`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => response.text())
+    .then(html => {
+      const tablaContenedor = document.getElementById('tabla-usuarios');
+      if (tablaContenedor) {
+        tablaContenedor.innerHTML = html;
+      }
+    })
+    .catch(err => console.error('Error al cargar usuarios:', err));
+  });
+});
+</script>

@@ -47,20 +47,21 @@
       {% endblock %}
     </nav>
 
-    <main class="main-dinamico inactivo">
-      {% block contenido_especifico %}
-      <!-- Contenido que cambia en cada dashboard segun el rol del usuario-->
-      {% endblock %}
+       <main class="main-dinamico inactivo">
+      {% block contenido_especifico %}{% endblock %}
     </main>
   </div>
 
   <footer>
-    {% block footer %}
-      <!-- footer en el caso de que queramos implementarlo-->
-    {% endblock %}
+    {% block footer %}{% endblock %}
   </footer>
 
- 
   <script src="{{ url_for('static', filename='js/dashboard_layout.js') }}"></script>
+  <script>
+    console.log("Script cargado correctamente 🎯");
+  </script>
+{% endblock %}
 
+{% block scripts_adicionales %}
+  {# Aquí no hace falta repetir el script, a menos que tengas otro JS #}
 {% endblock %}

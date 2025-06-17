@@ -22,6 +22,6 @@
   {% endblock %}
 
   <!-- Scripts javaScript, opcionales -->
-  <script src="{{ url_for('static', filename='js/layout.js') }}"></script>
+  {% block scripts_adicionales %}{% endblock %}
 </body>
 </html>

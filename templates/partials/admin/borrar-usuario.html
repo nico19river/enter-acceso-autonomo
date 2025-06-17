@@ -1,0 +1,64 @@
+<h2>Borrar Usuario</h2>
+
+<form id="form-borrar-usuario">
+  <input type="text" name="termino_busqueda" id="termino_busqueda" placeholder="Buscar por ID, nombre o email" autocomplete="off">
+  <button type="submit">Buscar</button>
+</form>
+
+<div id="tabla-usuarios">
+  {% if usuarios %}
+    {% include 'partials/admin/tabla_borrar_usuarios.html' %}
+  {% elif termino %}
+    <p>No se encontraron usuarios con ese término.</p>
+  {% endif %}
+</div>
+
+<!-- El script lo dejamos SIN 'DOMContentLoaded' porque lo vas a inyectar manualmente -->
+<script id="script-borrar-usuario">
+  const formBusqueda = document.getElementById('form-borrar-usuario');
+  const tablaContenedor = document.getElementById('tabla-usuarios');
+
+  if (formBusqueda && tablaContenedor) {
+    formBusqueda.addEventListener('submit', e => {
+      e.preventDefault();
+      const termino = formBusqueda.querySelector('input[name="termino_busqueda"]').value;
+
+      fetch('/borrar-usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: new URLSearchParams({ termino_busqueda: termino })
+      })
+      .then(res => res.text())
+      .then(html => {
+        tablaContenedor.innerHTML = html;
+        activarEventosEliminar();
+      })
+      .catch(console.error);
+    });
+
+    function activarEventosEliminar() {
+      tablaContenedor.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          if (!confirm("¿Querés eliminar este usuario?")) return;
+          const idUsuario = btn.dataset.id;
+
+          fetch(`/eliminar-usuario/${idUsuario}`, {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+          })
+          .then(res => {
+            if (!res.ok) throw new Error("Error al eliminar");
+            formBusqueda.dispatchEvent(new Event('submit'));
+          })
+          .catch(err => alert(err.message));
+        });
+      });
+    }
+
+    activarEventosEliminar();
+  }
+</script>

@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario['id_usuario'] }}</td>
+            <td>{{ usuario['nombre'] }}</td>
+            <td>{{ usuario['apellido'] }}</td>
+            <td>{{ usuario['email'] }}</td>
+            <td>{{ usuario['rol_usuario'] }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">No hay usuarios para mostrar.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>

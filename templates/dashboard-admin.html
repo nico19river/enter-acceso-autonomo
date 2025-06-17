@@ -2,8 +2,68 @@
 
 {% block title %}Dashboard Admin{% endblock %}
 
-
 {% block contenido_especifico %}
   <h1>Panel de Administración</h1>
   <p>Contenido específico del admin...</p>
+{% endblock %}
+
+{% block scripts_adicionales %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Evento para filtro por rol
+  document.body.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'filtro-rol') {
+      const rolSeleccionado = e.target.value;
+
+      fetch(`/listar-usuarios?rol=${rolSeleccionado}`, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      .then(response => response.text())
+      .then(html => {
+        const tablaContenedor = document.getElementById('tabla-usuarios');
+        if (tablaContenedor) {
+          tablaContenedor.innerHTML = html;
+        }
+      })
+      .catch(err => console.error('Error al cargar usuarios:', err));
+    }
+  });
+
+  // Delegación para cargar secciones dinámicamente con fetch
+  const links = document.querySelectorAll('[data-section]');
+  const main = document.querySelector('.main-dinamico');
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const section = link.getAttribute('data-section');
+
+      fetch(`/${section}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`No se pudo cargar la sección: ${section}`);
+          return res.text();
+        })
+        .then(html => {
+          main.innerHTML = html;
+
+          // Re-ejecutar scripts embebidos en la sección cargada
+          const scripts = main.querySelectorAll('script');
+          scripts.forEach(oldScript => {
+            const newScript = document.createElement('script');
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+            } else {
+              newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          main.innerHTML = '<p>Error al cargar la sección.</p>';
+        });
+    });
+  });
+});
+</script>
 {% endblock %}
