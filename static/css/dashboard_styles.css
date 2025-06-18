@@ -171,6 +171,25 @@ header {
   box-sizing: border-box;
 }
 
+.logo-central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+.logo-central img {
+  width: 250px;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.logo-central img:hover {
+  transform: scale(1.05);
+}
+
+
 /*
 Agregar imagen de fondo para cuando el main esta inactivo
 
