@@ -288,4 +288,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('Formulario de borrar-usuario no encontrado. No se inicializa.');
     }
   }
-});
+}); 

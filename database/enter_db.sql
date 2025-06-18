@@ -99,4 +99,4 @@ CREATE TABLE llaves_virtuales (
     fecha_expiracion TEXT NOT NULL,   -- Cuándo deja de ser válida
     estado TEXT NOT NULL DEFAULT 'valida', -- 'valida', 'usada'
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
-);
+); 

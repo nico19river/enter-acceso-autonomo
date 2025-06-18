@@ -35,4 +35,4 @@ def mostrar_formulario_invitacion():
 @rol_prop
 def procesar_envio_invitacion():
     print("DEBUG: Petición POST recibida en /enviar-invitacion.")
-    return enviar_invitacion()
+    return enviar_invitacion()  

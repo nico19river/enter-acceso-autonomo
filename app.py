@@ -77,7 +77,8 @@ def invitado_gracias():
 
 # --- INICIO DE LA APLICACIÓN (DEBE SER LO ÚLTIMO) ---
 if __name__=='__main__': #si estamos en el main lanzamos la app
-    app.run(debug=True) #activa modo debug
+    app.run(debug=True) #activa modo debug 
 
     
 
+ 

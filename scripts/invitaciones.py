@@ -198,4 +198,4 @@ def procesar_formulario_invitado():
         conn.rollback() # Asegurar rollback en caso de cualquier otra excepción
         conn.close()
         print(f"ERROR: Error inesperado al procesar el formulario del invitado: {e}")
-        return jsonify({"status": "error", "message": f"Error interno del servidor: {e}"}), 500
+        return jsonify({"status": "error", "message": f"Error interno del servidor: {e}"}), 500 
