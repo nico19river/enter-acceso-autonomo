@@ -1,3 +1,49 @@
+<style>
+
+    .contenedor-listar-usuarios {
+        width: 800px; /* Ancho fijo para este contenedor */
+        margin: 50px auto; /* Centra horizontalmente y da un margen superior/inferior */
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+        text-align: center; /* Centra el texto y elementos inline-block dentro */
+    }
+
+    /* Estilos para el título principal */
+    .contenedor-listar-usuarios h2 {
+        color: #007bff;
+        margin-bottom: 30px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Estilos para el filtro de rol (el <select>) */
+    #filtro-rol {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1em;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+         }
+
+    #filtro-rol:hover {
+        border-color: #007bff;
+    }
+
+    /* Estilos para el contenedor de la tabla inyectada */
+    #tabla-usuarios {
+        margin-top: 20px;
+         }
+
+
+</style>
+
 <h2>Lista de Usuarios</h2>
 
 <!-- Filtro de rol -->

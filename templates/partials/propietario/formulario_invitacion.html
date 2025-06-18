@@ -1,7 +1,115 @@
+
+<style>
+    /* Estilos para el body no son relevantes aquí, pero se mantienen si necesitas que el partial los defina */
+    body {
+        background-color: #f4f4f4; /* Fondo suave para el área del partial si no hay uno global */
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    /* ÚNICO CONTENEDOR PRINCIPAL para el formulario de invitación */
+    /* Este contenedor es el que se centrará dentro del main-dinamico */
+    .contenedor-invitacion-principal {
+        width: 700px; /* Ancho fijo para el contenedor del formulario */
+        margin: 50px auto; /* Centra horizontalmente y da un margen superior/inferior */
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+        text-align: center; /* Centra el texto y elementos inline-block dentro (inputs, labels, botones) */
+    }
+
+    /* Estilos para el formulario en sí */
+    #invitacion-form {
+        margin-bottom: 20px; /* Espacio debajo del formulario */
+    }
+    #invitacion-form h2 {
+        color: #007bff;
+        margin-bottom: 30px; /* Margen como en tu modelo */
+        font-size: 2em; /* Tamaño de fuente como en tu modelo */
+    }
+    #invitacion-form label {
+        display: block; /* Cada label en su propia línea */
+        text-align: center; /* Alinea el texto de la etiqueta a la izquierda */
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+    #invitacion-form input[type="email"],
+    #invitacion-form input[type="date"],
+    #invitacion-form input[type="time"] {
+        width: 450px; /* CAMBIO: Más ancho para los inputs */
+        padding: 15px; /* CAMBIO: Más padding para un tamaño de campo más grande */
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 1.2em; /* CAMBIO: Tamaño de fuente más grande */
+        text-align: center; /* Centra el texto dentro del input */
+        display: block; /* Necesario para margin auto */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #invitacion-form button[type="submit"] {
+        background-color: #007bff; /* Color azul */
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 20px; /* Borde radio como en tu modelo */
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: background-color 0.3s ease;
+        margin-top: 20px; /* CAMBIO: Más margen superior para separarlo de los inputs */
+        /* Para asegurar el centrado si el text-align del padre no fuera suficiente */
+        display: block; /* Necesario para margin auto */
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content; /* El ancho se ajusta al contenido del botón */
+    }
+    #invitacion-form button[type="submit"]:hover {
+        background-color: #0056b3; /* Color azul oscuro al hover */
+    }
+
+    /* Mensajes de estado (éxito/error) */
+    #mensaje-invitacion {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.1em;
+    }
+    #mensaje-invitacion.exito {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    #mensaje-invitacion.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Estilos para el enlace de depuración del QR */
+    #enlace-invitado-qr-preview {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #666;
+        word-break: break-all;
+        text-align: center;
+    }
+    #enlace-invitado-qr-preview a {
+        color: #007bff;
+        text-decoration: underline;
+    }
+</style>
+
 <form id="invitacion-form">
   <h2>Enviar Nueva Invitación</h2>
-  <label for="email_invitado">Email del Invitado:</label>
-  <input type="email" id="email_invitado" name="email_invitado" placeholder="ejemplo@email.com" required />
+  <label for="email_visita">Email del Invitado:</label>
+  <input type="email" id="email_visita" name="email_visita" placeholder="ejemplo@email.com" required />
 
   <label for="fecha_visita">Fecha de Visita:</label>
   <input type="date" id="fecha_visita" name="fecha_visita" required />

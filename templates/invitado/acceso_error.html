@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Denegado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6; /* Fondo rojo claro */
+            color: #721c24; /* Texto rojo oscuro */
+            text-align: center;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #f8d7da; /* Un rojo un poco más oscuro para el contenedor */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(128, 0, 0, 0.2); /* Sombra roja */
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #dc3545; /* Rojo más brillante */
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❌ ACCESO DENEGADO ❌</h1>
+        <p>{{ message }}</p>
+        <p>Por favor, contacta a tu anfitrión o a la administración del edificio si crees que es un error.</p>
+        <p><a href="/">Volver al inicio</a></p>
+    </div>
+</body>
+</html>

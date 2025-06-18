@@ -1,3 +1,64 @@
+<style>
+    /* Contenedor principal que englobará la tabla para centrarla */
+    /* Usaremos un div con una clase para centrar la tabla */
+    .contenedor-tabla-general {
+        width: fit-content; /* El ancho se ajusta al contenido de la tabla */
+        margin: 50px auto; /* Centra horizontalmente y da un margen superior/inferior */
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+        text-align: center; /* Centra el texto y elementos inline-block dentro */
+    }
+
+    /* Estilos para la tabla */
+    table {
+        width: 100%; /* La tabla ocupará todo el ancho de su contenedor */
+        border-collapse: collapse; /* Elimina el espacio entre los bordes de las celdas */
+        margin-top: 20px;
+        font-size: 1em;
+    }
+
+    /* Estilos para el encabezado de la tabla */
+    th {
+        background-color: #007bff; /* Fondo azul para el encabezado */
+        color: white; /* Texto blanco en el encabezado */
+        padding: 12px 15px;
+        text-align: left; /* Alineación del texto del encabezado */
+        border: 1px solid #0056b3; /* Borde más oscuro para el encabezado */
+    }
+
+    /* Estilos para las celdas de datos */
+    td {
+        padding: 10px 15px;
+        text-align: left; /* Alineación del texto de las celdas */
+        border: 1px solid #ddd; /* Borde suave para las celdas */
+    }
+
+    /* Estilos para filas impares/pares (zebra-striping) para mejor legibilidad */
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Color de fondo para filas pares */
+    }
+
+    /* Estilos para el botón de eliminar (consistente con los demás) */
+    .btn-eliminar {
+        background-color: #dc3545; /* Rojo para eliminar */
+        color: white;
+        border: none;
+        border-radius: 20px; /* Borde redondeado consistente */
+        padding: 8px 15px; /* Padding ajustado para botones dentro de tabla */
+        cursor: pointer;
+        font-size: 0.9em; /* Tamaño de fuente un poco más pequeño para caber en tabla */
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    .btn-eliminar:hover {
+        background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+    }
+</style>
 <table>
   <thead>
     <tr>

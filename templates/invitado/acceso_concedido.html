@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Concedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #e6ffe6; /* Fondo verde claro */
+            color: #155724; /* Texto verde oscuro */
+            text-align: center;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #d4edda; /* Un verde un poco más oscuro para el contenedor */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 128, 0, 0.2); /* Sombra verde */
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #28a745; /* Verde más brillante */
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .details {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #c3e6cb;
+        }
+        .details p strong {
+            color: #0d6e1d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ ACCESO CONCEDIDO ✅</h1>
+        <p>¡Bienvenido/a al edificio!</p>
+        <p>Tu ingreso ha sido verificado.</p>
+        
+        <div class="details">
+            <p><strong>Invitado:</strong> {{ invitacion.nombre_visitante or 'N/A' }}</p>
+            <p><strong>Fecha de Visita:</strong> {{ invitacion.fecha_visita }}</p>
+            <p><strong>Hora de Visita:</strong> {{ invitacion.hora_visita }}</p>
+            </div>
+    </div>
+</body>
+</html>

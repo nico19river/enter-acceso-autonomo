@@ -35,10 +35,10 @@
         box-sizing: border-box;
     }
     .boton-submit {
-        background-color: #1A1D29;
-        color: #c4c4c4;
+        background-color: #007bff;
+        color: white;
         border: none;
-        border-radius: 30px;
+        border-radius: 20px;
         padding: 1rem;
         cursor: pointer;
         font-size: 1.1rem;
@@ -49,8 +49,7 @@
         transition: background-color 0.3s;
     }
     .boton-submit:hover {
-        background-color: #2c1eaf;
-        color: white;
+        background-color: #0056b3;;
     }
 </style>
 
@@ -59,7 +58,7 @@
     <h4 class="titulo-formulario">Creando Nuevo Usuario: <span class="rol">{{ rol_seleccionado }}</span></h4>
 
     <!-- Este formulario enviará los datos a la nueva ruta /guardar-usuario -->
-   S
+   
     <form action="{{ url_for('partials_admin.guardar_usuario') }}" method="POST">
 
         <!-- Campo oculto para enviar el rol y el barrio del admin al backend -->
@@ -87,7 +86,6 @@
         <!-- === CAMPOS ESPECÍFICOS SOLO PARA PROPIETARIO === -->
         {% if rol_seleccionado == 'propietario' %}
             <hr>
-            <p class="text-muted text-center">Campos para Propietario</p>
             <div class="campo-grupo">
                 <label for="pin_acceso">PIN de Acceso (4 dígitos)</label>
                 <input type="text" id="pin_acceso" name="pin_acceso" maxlength="4" pattern="\d{4}">

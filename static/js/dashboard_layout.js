@@ -164,7 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
             mensaje.className = '';
           }
           if (json.qr) {
-            qrContainer.innerHTML = `<img src="data:image/png;base64,${json.qr}" alt="QR generado" />`;
+            let qrContent = `<img src="data:image/png;base64,${json.qr}" alt="QR generado" class="imagen-qr-mostrada" />`;
+            
+            // --- AQUI SE AGREGA EL ENLACE DE TEXTO DEBAJO DEL QR EN LA MISMA ASIGNACIÓN ---
+            if (json.qr_link) { // Si el backend devuelve la URL que el QR codifica
+                qrContent += `<p class="enlace-qr-texto">Este QR dirige a: <a href="${json.qr_link}" target="_blank">${json.qr_link}</a></p>`;
+            }
+            // -----------------------------------------------------------------------------
+            qrContainer.innerHTML = qrContent;
             console.log('QR generado e insertado en el DOM.');
           } else {
             console.error('Respuesta OK, pero no se recibió la imagen del QR.');

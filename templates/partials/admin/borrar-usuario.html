@@ -1,3 +1,77 @@
+<style>
+/* Contenedor principal que agrupará el título, el formulario de búsqueda y la tabla */
+.contenedor-borrar-usuario {
+    width: 800px; /* Ancho fijo para este contenedor */
+    margin: 50px auto; /* Centra horizontalmente y da un margen superior/inferior */
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    text-align: center; /* Centra el texto y elementos inline-block dentro */
+}
+
+/* Estilos para el título principal */
+.contenedor-borrar-usuario h2 {
+    color: #007bff;
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Estilos para el formulario de búsqueda */
+#form-borrar-usuario {
+    margin-bottom: 20px;
+    display: flex; /* Usamos flex para alinear input y botón en la misma línea */
+    justify-content: center; /* Centra el contenido (input y botón) */
+    align-items: center;
+    gap: 10px; /* Espacio entre el input y el botón */
+}
+#form-borrar-usuario input[type="text"] {
+    width: 300px; /* Ancho fijo para el campo de búsqueda */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    text-align: center;
+}
+#form-borrar-usuario button[type="submit"] {
+    background-color: #007bff; /* Color azul */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px; /* Borde redondeado consistente */
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+#form-borrar-usuario button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para el contenedor de la tabla de usuarios inyectada */
+#tabla-usuarios {
+    margin-top: 20px;
+    /* Estilos de la tabla en sí deben estar en 'tabla_borrar_usuarios.html' */
+    /* para que se apliquen cuando el partial se inyecte */
+}
+
+/* Estilos para el mensaje "No se encontraron usuarios" */
+#tabla-usuarios p {
+    padding: 15px;
+    background-color: #fff3cd; /* Fondo de alerta suave */
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    color: #856404;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+</style>
+
 <h2>Borrar Usuario</h2>
 
 <form id="form-borrar-usuario">
