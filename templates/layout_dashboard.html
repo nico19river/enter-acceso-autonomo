@@ -48,9 +48,11 @@
     </nav>
 
        <main class="main-dinamico inactivo">
-      {% block contenido_especifico %}{% endblock %}
+        {% block contenido_especifico %}{% endblock %}
+        <div class="logo-central">
+          <img src="{{ url_for('static', filename='img/logo-img.png') }}" alt="Logo central">
+        </div>
     </main>
-  </div>
 
   <footer>
     {% block footer %}{% endblock %}
