@@ -11,10 +11,10 @@ Sistema de gestión de accesos para barrios cerrados, con enfoque en autonomia y
 
 ## 🧠 Stack Tecnológico
 
-- **Frontend:** HTML, CSS, Bootstrap, JavaScript
+- **Frontend:** HTML, CSS,  JavaScript
 - **Backend:** Python, Flask
-- **Base de datos:** MySQL o SQLite (a definir)
-- **Otros:** Generación y validacion de códigos QR, Notificaciones Push.
+- **Base de datos:** SQLite (a definir)
+- **Otros:** Generación y validacion de códigos QR
 
 ## 👥 Equipo de Desarrollo
 
