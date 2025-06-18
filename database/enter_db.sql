@@ -53,14 +53,18 @@ CREATE TABLE usuarios_lotes (
 -- Tabla Invitaciones
 CREATE TABLE invitaciones (
     id_invitacion INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_usuario INTEGER NOT NULL, -- quien invita
-    nombre_visitante TEXT NOT NULL,
-    dni_visitante TEXT NOT NULL,
+    id_usuario INTEGER NOT NULL,  -- quien invita (propietario)
+    nombre_visitante TEXT,
+    dni_visitante TEXT,
     fecha_visita TEXT NOT NULL,
-    estado TEXT NOT NULL DEFAULT 'noAprobada', 
-    -- Valores esperados: 'noAprobada', 'aprobada', 'ingresado', 'visitaconcluida'
-    imagen_patente TEXT, -- ruta o nombre del archivo de imagen de la patente (ver esto)
-    comentario TEXT, -- comentarios sobre el estado de la visita, motivo de rechazo, etc.
+    estado TEXT NOT NULL DEFAULT 'noAprobada',
+    token TEXT NOT NULL UNIQUE,
+    comentario TEXT,
+    vehiculo BOOLEAN DEFAULT 1,              -- 0: no, 1: sí
+    patente TEXT,                          -- Patente si entra en auto
+    imagen_poliza TEXT,                    -- Ruta o nombre del archivo subido (póliza de seguro)
+    acompanantes_mayores TEXT,            -- Lista de DNIs separados por coma
+    acompanantes_menores TEXT,            -- Lista de nombres y apellidos separados por coma
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 

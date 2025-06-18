@@ -21,7 +21,6 @@ def home():
 
 if __name__=='__main__': #si estamos en el main lanzamos la app
     for rule in app.url_map.iter_rules():
-        print(f"Endpoint: {rule.endpoint} -> URL: {rule.rule}")
     app.run(debug=True) #activa modo debug
 
 

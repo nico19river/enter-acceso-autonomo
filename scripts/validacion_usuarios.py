@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 import sqlite3
-from database import *
+from database.utils_db import get_db_connection 
 
 #crea el blueprint para llamarlo desde app.py
 validacion_usuarios = Blueprint('validacion_usuarios', __name__)
@@ -9,13 +9,18 @@ validacion_usuarios = Blueprint('validacion_usuarios', __name__)
 #TODO hashear password
 
 def get_user(email, password):
-    conn = sqlite3.connect('database/enter_local_db.db')  
+    conn = get_db_connection()
+    if not conn:
+        return None
     cursor = conn.cursor()
-    cursor.execute("SELECT id_usuario, nombre, email, password, rol_usuario FROM usuarios WHERE email = ? AND password = ?", (email, password))  
-    user = cursor.fetchone()  #crea la variable user y le da el valor del usuario al que apunta el cursor
-    conn.close()  #cierra la conexion
+    cursor.execute(
+        "SELECT id_usuario, nombre, email, password, rol_usuario FROM usuarios WHERE email = ? AND password = ?", 
+        (email, password)
+    )
+    user = cursor.fetchone()
+    conn.close()
     return user
-
+    
 @validacion_usuarios.route('/', methods=['GET', 'POST'])
 #recibe solicitudes HTTP del tipo GET y POST
 def validar_usuario():
@@ -25,7 +30,7 @@ def validar_usuario():
         user = get_user(email, password)  #llama al metodo con esos parametros
 
         if user:  #si el usuario existe :
-            session['user_id'] = user[0]  #userID en la tabla -> id_usuario
+            session['id_usuario'] = user[0]  #userID en la tabla -> id_usuario
             session['username'] = user[1]  # username en la tabla -> nombre
             session['user_type'] = user[4]  #Rol de usuario en la tabla -> rol_usuario
             #durante toda la sesión se recuerda quién está logueado y qué permisos tiene.

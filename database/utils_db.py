@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # sin importar desde dónde se ejecute la aplicación, evitando errores comunes.
 _dir_actual = os.path.dirname(__file__)
 # Asegúrate de que este nombre coincida con tu archivo de base de datos.
-DB_FILENAME = 'enter_local_db.db' 
+DB_FILENAME = 'enter_DATABASE.db' 
 DATABASE_PATH = os.path.join(_dir_actual, DB_FILENAME)
 
 
