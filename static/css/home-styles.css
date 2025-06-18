@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -34,16 +36,23 @@ body, html {
 }
 
 .texto-copy {
-  font-size: 25px;
-  line-height: 1.5;     /* Para que el texto sea más legible */
-  text-align: justify;  /* Para justificar el texto */
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem; /* un poco más grande */
+  color: #333333;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  margin-top: 0; /* sin espacio arriba para acercar al logo */
+  background-color: transparent;
+  padding: 0; /* menos padding para que quede más compacto */
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .logo {
-
   width: 400px;
   height: auto;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 /* Panel derecho →  formulario */
