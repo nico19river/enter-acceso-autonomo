@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, abort, request, jsonify
 from scripts.llave_virtual import generar_llave_virtual  # Importamos la función de lógica qr
+from scripts.invitaciones import enviar_invitacion
 from functools import wraps
 
 partials_prop = Blueprint('partials_prop', __name__, template_folder='templates')
@@ -23,3 +24,15 @@ def mostrar_formulario_pin():
 def generar_qr():
     # Aquí delegamos la lógica de generación de QR al archivo llave_virtual.py
     return generar_llave_virtual()
+
+@partials_prop.route('/enviar-invitacion-form') # <--- ESTA ES LA RUTA QUE NECESITAS
+@rol_prop
+def mostrar_formulario_invitacion():
+    print("DEBUG: Accediendo a /enviar-invitacion-form. Renderizando formulario_invitacion.html")
+    return render_template('partials/propietario/formulario_invitacion.html') # <--- Renderiza tu HTML
+
+@partials_prop.route('/enviar-invitacion', methods=['POST'])
+@rol_prop
+def procesar_envio_invitacion():
+    print("DEBUG: Petición POST recibida en /enviar-invitacion.")
+    return enviar_invitacion()

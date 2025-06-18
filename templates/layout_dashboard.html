@@ -37,7 +37,7 @@
             <li><a href="#" data-section="listar-usuarios">Ver usuarios</a></li>
             <!-- TODO poner todo dentro de "gestion usuario y hacer un desplegable para opciones o otra pantalla"-->
           {% elif session.get('user_type') == 'propietario' %}
-            <li><a href="#" data-section="enviar-invitacion">Enviar invitación</a></li>
+            <li><a href="#" data-section="enviar-invitacion-form">Enviar invitación</a></li>
             <li><a href="#" data-section="llave-virtual">Llave virtual</a></li> <!--crear el QR de acceso al barrio-->
           {% elif session.get('user_type') == 'seguridad' %}
             <li><a href="#" data-section="escanear-QR-acceso">Escanear QR</a></li>

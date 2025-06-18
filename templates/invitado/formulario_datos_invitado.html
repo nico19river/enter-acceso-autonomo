@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Invitación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Puedes mover esto a un archivo CSS estático si lo prefieres */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .mensaje {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .mensaje.exito {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .mensaje.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulario de Datos de Visita</h1>
+        <p>Por favor, completa los siguientes datos para confirmar tu visita.</p>
+        <p>Visita programada para: <strong>{{ invitacion.fecha_visita }}</strong> a las <strong>{{ invitacion.hora_visita }}</strong></p>
+
+        <form id="datos-invitado-form" enctype="multipart/form-data">
+            <input type="hidden" name="token" value="{{ token }}" />
+
+            <div class="form-section">
+                <h3>Tus Datos</h3>
+                <label for="nombre_invitado">Nombre y Apellido:</label>
+                <input type="text" id="nombre_invitado" name="nombre_invitado" required />
+
+                <label for="dni_invitado">DNI:</label>
+                <input type="text" id="dni_invitado" name="dni_invitado" pattern="[0-9]{7,8}" title="Ingrese un DNI válido (7 u 8 dígitos numéricos)" required />
+            </div>
+
+            <div class="form-section">
+                <h3>Información del Vehículo</h3>
+                <label>
+                    <input type="checkbox" id="ingresa_auto_checkbox" name="ingresa_auto" value="si" />
+                    Ingreso en auto
+                </label>
+                <div id="vehiculo-info" class="hidden">
+                    <label for="patente">Patente:</label>
+                    <input type="text" id="patente" name="patente" placeholder="AAA123 o AA123BB" />
+
+                    <label for="poliza_seguro">Foto de la Póliza de Seguro Vigente (PDF o Imagen):</label>
+                    <input type="file" id="poliza_seguro" name="poliza_seguro" accept=".pdf,image/*" />
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Acompañantes</h3>
+                <label for="cantidad_acompanantes">¿Cuántos acompañantes tienes?</label>
+                <input type="number" id="cantidad_acompanantes" name="cantidad_acompanantes" min="0" value="0" />
+
+                <div id="acompanantes-info" class="hidden">
+                    <label for="acompanantes_mayores">DNI(s) de Acompañantes Mayores (separados por coma):</label>
+                    <input type="text" id="acompanantes_mayores" name="acompanantes_mayores" placeholder="Ej: 12345678, 87654321" />
+
+                    <label for="acompanantes_menores">Nombre y Apellido de Acompañantes Menores (separados por coma):</label>
+                    <input type="text" id="acompanantes_menores" name="acompanantes_menores" placeholder="Ej: Juan Pérez, María Gómez" />
+                </div>
+            </div>
+
+            <button type="submit">Confirmar Visita</button>
+        </form>
+
+        <div id="mensaje-invitado" class="mensaje hidden"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DEBUG: DOM de formulario_datos_invitado.html cargado.');
+
+            const ingresaAutoCheckbox = document.getElementById('ingresa_auto_checkbox');
+            const vehiculoInfoDiv = document.getElementById('vehiculo-info');
+            const cantidadAcompanantesInput = document.getElementById('cantidad_acompanantes');
+            const acompanantesInfoDiv = document.getElementById('acompanantes-info');
+            const form = document.getElementById('datos-invitado-form');
+            const mensajeDiv = document.getElementById('mensaje-invitado');
+
+            // --- Lógica para mostrar/ocultar secciones ---
+            function toggleVehiculoInfo() {
+                if (ingresaAutoCheckbox.checked) {
+                    vehiculoInfoDiv.classList.remove('hidden');
+                } else {
+                    vehiculoInfoDiv.classList.add('hidden');
+                    // Limpiar campos si se ocultan
+                    document.getElementById('patente').value = '';
+                    document.getElementById('poliza_seguro').value = ''; // Resetea el input file
+                }
+                console.log('DEBUG: Estado de "Ingreso en auto" cambiado.');
+            }
+
+            function toggleAcompanantesInfo() {
+                const numAcompanantes = parseInt(cantidadAcompanantesInput.value, 10);
+                if (numAcompanantes > 0) {
+                    acompanantesInfoDiv.classList.remove('hidden');
+                } else {
+                    acompanantesInfoDiv.classList.add('hidden');
+                    // Limpiar campos si se ocultan
+                    document.getElementById('acompanantes_mayores').value = '';
+                    document.getElementById('acompanantes_menores').value = '';
+                }
+                console.log('DEBUG: Cantidad de acompañantes cambiada.');
+            }
+
+            // Event Listeners
+            ingresaAutoCheckbox.addEventListener('change', toggleVehiculoInfo);
+            cantidadAcompanantesInput.addEventListener('input', toggleAcompanantesInfo);
+
+            // Estado inicial al cargar la página
+            toggleVehiculoInfo();
+            toggleAcompanantesInfo();
+
+            // --- Lógica de envío del formulario ---
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                mensajeDiv.textContent = '';
+                mensajeDiv.className = 'mensaje hidden';
+                console.log('DEBUG: Evento submit del formulario de invitado detectado.');
+
+                const formData = new FormData(form); // FormData para manejar archivos
+
+                console.log('DEBUG: Datos del formulario de invitado antes de enviar (FormData):');
+                for (let pair of formData.entries()) {
+                  console.log(`  ${pair[0]}: ${pair[1]}`);
+                }
+                console.log('DEBUG: Iniciando petición fetch POST a /procesar-invitacion...');
+
+
+                try {
+                    const res = await fetch('/procesar-invitacion', {
+                        method: 'POST',
+                        // ¡IMPORTANTE!: No establezcas 'Content-Type' manualmente con FormData
+                        // El navegador lo hará automáticamente, incluyendo el boundary para archivos.
+                        // headers: { 'X-Requested-With': 'XMLHttpRequest' }, // Puede ser útil, pero no crítico aquí
+                        body: formData // Envía FormData directamente
+                    });
+
+                    console.log('DEBUG: Respuesta recibida de /procesar-invitacion:', res);
+
+                    const json = await res.json();
+                    console.log('DEBUG: JSON de respuesta parseado:', json);
+
+                    mensajeDiv.classList.remove('hidden');
+                    if (res.ok && json.status === 'ok') {
+                        mensajeDiv.className = 'mensaje exito';
+                        mensajeDiv.textContent = json.message;
+                        console.log('DEBUG: Formulario de invitado procesado con éxito.');
+                        // Opcional: Deshabilitar formulario o redirigir
+                        form.reset(); // Limpia el formulario
+                        setTimeout(() => {
+                            window.location.href = '/invitacion/gracias'; // Redirige a una página de confirmación
+                        }, 3000); // Redirige después de 3 segundos
+                    } else {
+                        mensajeDiv.className = 'mensaje error';
+                        mensajeDiv.textContent = json.message || 'Error desconocido al procesar visita.';
+                        console.error('ERROR: Status no "ok" en la respuesta del backend para invitado:', json.message);
+                    }
+                } catch (error) {
+                    mensajeDiv.className = 'mensaje error';
+                    mensajeDiv.textContent = 'Error al enviar datos: ' + error.message;
+                    console.error('*** ERROR FATAL de fetch para invitado (conexión):', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

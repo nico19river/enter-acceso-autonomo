@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Contenedor principal (.main-dinamico) no encontrado. La carga dinámica de secciones no funcionará.');
   }
 
-
   // FUNCIÓN PRINCIPAL PARA CARGAR SECCIONES
   function cargarSeccion(section) {
     console.log(`Iniciando carga de sección: /${section}`);
@@ -75,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (section === 'llave-virtual') {
             console.log('Sección es "llave-virtual". Llamando a prepararFormularioPin().');
             prepararFormularioPin();
+          } else if (section === 'enviar-invitacion-form') { // <-- ¡NUEVA CONDICIÓN PARA INVITACIONES!
+            console.log('Sección es "enviar-invitacion-form". Llamando a prepararFormularioInvitacion().');
+            prepararFormularioInvitacion(); // <-- ¡LLAMADA A LA FUNCIÓN FALTANTE!
           } else if (section === 'borrar-usuario') {
             console.log('Sección es "borrar-usuario". Llamando a prepararFormularioBorrarUsuario().');
             prepararFormularioBorrarUsuario();
@@ -92,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // PREPARAR EL FORMULARIO DEL PIN (Movida aquí desde formulario_pin.html)
+  // PREPARAR EL FORMULARIO DEL PIN
   function prepararFormularioPin() {
     console.log('Iniciando preparación del formulario PIN.');
     const form = document.getElementById('pin-form');
@@ -114,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(form);
       const data = new URLSearchParams(formData);
 
-      // Log de los datos que se van a enviar
       console.log('Datos del formulario antes de enviar:');
       for (let pair of formData.entries()) {
         console.log(`  ${pair[0]}: ${pair[1]}`);
@@ -133,12 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log('Respuesta recibida de /generar-qr:', res);
 
-        // Clona la respuesta para poder leerla dos veces (una para .ok, otra para .json())
         const resClone = res.clone();
 
         if (!res.ok) {
-            // Intenta leer el mensaje de error del backend si la respuesta no fue OK
-            const errorText = await resClone.text(); // Lee como texto para evitar errores de JSON
+            const errorText = await resClone.text();
             console.error('Respuesta no OK de /generar-qr. Status:', res.status, 'Body:', errorText);
             try {
                 const jsonError = JSON.parse(errorText);
@@ -149,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mensaje.textContent = `Error del servidor (status ${res.status}). No se pudo parsear la respuesta JSON.`;
                 console.error('Error al parsear JSON de error:', jsonParseError);
             }
-            return; // Detener ejecución si la respuesta no fue OK
+            return;
         }
 
         const json = await res.json();
@@ -180,6 +179,70 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.className = 'error';
         mensaje.textContent = 'Error al generar QR: ' + error.message;
         console.error('*** Detalle del error FATAL de fetch para QR (conexión):', error);
+      }
+    });
+  }
+
+  // ***** FUNCIÓN PARA PREPARAR EL FORMULARIO DE INVITACIÓN - AÑADIDA AQUÍ *****
+  function prepararFormularioInvitacion() {
+    console.log('DEBUG: Iniciando preparación del formulario de invitación.');
+    const form = document.getElementById('invitacion-form');
+    const mensajeDiv = document.getElementById('mensaje-invitacion');
+    const enlacePreviewDiv = document.getElementById('enlace-invitado-qr-preview');
+
+    if (!form) {
+      console.error('ERROR: Formulario de invitación (#invitacion-form) no encontrado.');
+      return;
+    }
+    console.log('DEBUG: Formulario de invitación encontrado:', form);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      mensajeDiv.textContent = '';
+      mensajeDiv.className = '';
+      enlacePreviewDiv.innerHTML = '';
+      console.log('DEBUG: Evento submit del formulario de invitación detectado.');
+
+      const formData = new FormData(form);
+      const data = new URLSearchParams(formData); // URLSearchParams si no hay archivos
+
+      console.log('DEBUG: Datos del formulario de invitación antes de enviar:');
+      for (let pair of formData.entries()) {
+        console.log(`  ${pair[0]}: ${pair[1]}`);
+      }
+      console.log('DEBUG: Iniciando petición fetch POST a /enviar-invitacion...');
+
+      try {
+        const res = await fetch('/enviar-invitacion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', // Correcto para URLSearchParams
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: data
+        });
+
+        console.log('DEBUG: Respuesta recibida de /enviar-invitacion:', res);
+
+        const json = await res.json();
+        console.log('DEBUG: JSON de respuesta parseado:', json);
+
+        if (res.ok && json.status === 'ok') {
+          mensajeDiv.className = 'exito';
+          mensajeDiv.textContent = json.message;
+          if (json.enlace_invitado) {
+            enlacePreviewDiv.innerHTML = `<p>Enlace de invitación (para depuración): <a href="${json.enlace_invitado}" target="_blank">${json.enlace_invitado}</a></p>`;
+          }
+          console.log('Invitación enviada con éxito.');
+        } else {
+          mensajeDiv.className = 'error';
+          mensajeDiv.textContent = json.message || 'Error desconocido al enviar invitación.';
+          console.error('ERROR: Status no "ok" en la respuesta del backend para invitación:', json.message);
+        }
+      } catch (error) {
+        mensajeDiv.className = 'error';
+        mensajeDiv.textContent = 'Error al enviar invitación: ' + error.message;
+        console.error('*** ERROR FATAL de fetch para invitación (conexión):', error);
       }
     });
   }

@@ -56,6 +56,8 @@ CREATE TABLE invitaciones (
     id_usuario INTEGER NOT NULL,  -- quien invita (propietario)
     nombre_visitante TEXT,
     dni_visitante TEXT,
+    email_visita TEXT, NOT NULL
+    hora_visita TEXT, NOT NULL
     fecha_visita TEXT NOT NULL,
     estado TEXT NOT NULL DEFAULT 'noAprobada',
     token TEXT NOT NULL UNIQUE,
@@ -63,6 +65,7 @@ CREATE TABLE invitaciones (
     vehiculo BOOLEAN DEFAULT 1,              -- 0: no, 1: sí
     patente TEXT,                          -- Patente si entra en auto
     imagen_poliza TEXT,                    -- Ruta o nombre del archivo subido (póliza de seguro)
+    cantiadad_acompanantes INTEGER,
     acompanantes_mayores TEXT,            -- Lista de DNIs separados por coma
     acompanantes_menores TEXT,            -- Lista de nombres y apellidos separados por coma
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)

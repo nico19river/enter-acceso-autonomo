@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por Confirmar!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .success-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            border: 2px solid #28a745; /* Verde para éxito */
+        }
+        h1 {
+            color: #28a745; /* Verde */
+        }
+        p {
+            color: #555;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h1>✅ ¡Datos de Visita Confirmados!</h1>
+        <p>Gracias por completar la información. Tu visita está pendiente de aprobación final.</p>
+        <p>Recibirás una confirmación por parte de tu anfitrión.</p>
+    </div>
+</body>
+</html>
