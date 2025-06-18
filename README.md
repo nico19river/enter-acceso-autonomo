@@ -22,7 +22,7 @@ Este proyecto fue desarrollado por un equipo de 6 integrantes de la carrera de T
 
 - 👤 Nombre 1
 - 👤 Nombre 2
-- 👤 Nombre 3
+- 👤 Maximiliano Vergot
 - 👤 Ignacio Nicolas Beltran
 - 👤 Milagros Medrano
 - 👤 Mayra Artoni
