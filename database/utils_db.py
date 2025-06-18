@@ -150,3 +150,53 @@ def obtener_usuarios_por_rol(rol):
     usuarios = cursor.fetchall()
     conn.close()
     return usuarios
+
+def obtener_datos_usuario(id_usuario, rol):
+    try:
+        conn = get_db_connection()
+        if not conn:
+            return None
+            
+        cursor = conn.cursor()
+        
+        # Consulta base común para todos los roles
+        if rol == 'propietario':
+            query = """
+                SELECT nombre, apellido, email, unidad_funcional
+                FROM usuarios
+                WHERE id_usuario = ?
+            """
+        elif rol == 'seguridad':
+            query = """
+                SELECT nombre, apellido, email, turno
+                FROM usuarios
+                WHERE id_usuario = ?
+            """
+        else:  # admin o cualquier otro rol
+            query = """
+                SELECT nombre, apellido, email
+                FROM usuarios
+                WHERE id_usuario = ?
+            """
+        
+        cursor.execute(query, (id_usuario,))
+        row = cursor.fetchone()
+        
+        if not row:
+            return None
+        
+        # Convertir a diccionario
+        columns = [column[0] for column in cursor.description]
+        datos = dict(zip(columns, row))
+        
+        # Limpiar campos NULL
+        datos = {k: v for k, v in datos.items() if v is not None}
+        
+        return datos
+        
+    except Exception as e:
+        print(f"Error al obtener datos del usuario: {str(e)}")
+        return None
+    finally:
+        if conn:
+            conn.close()
