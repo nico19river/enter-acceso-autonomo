@@ -1,3 +1,4 @@
 Faker==37.4.0
 Flask==3.1.1
 qrcode==8.2
+pillow==11.0.0
