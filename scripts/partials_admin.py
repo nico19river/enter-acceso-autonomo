@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, abort,request, redirect, flash, url_for
+from flask import Blueprint, render_template, session, abort,request, redirect, flash, url_for, jsonify
 from database.utils_db import add_usuario, link_usuario_lote, obtener_lotes, get_db_connection
 
 partials_admin = Blueprint('partials_admin', __name__, template_folder='templates')
@@ -94,38 +94,59 @@ def guardar_usuario():
 def borrar_usuario():
     usuarios = []
     termino = None
+
     if request.method == 'POST':
         termino = request.form.get('termino_busqueda')
         if termino:
-            conn = get_db_connection()
-            cursor = conn.cursor()
             like_term = f"%{termino}%"
-            cursor.execute("""
-                SELECT id_usuario, nombre, apellido, email, rol_usuario
-                FROM usuarios
-                WHERE id_usuario LIKE ? OR nombre LIKE ? OR apellido LIKE ? OR email LIKE ?
-            """, (like_term, like_term, like_term, like_term))
-            usuarios = cursor.fetchall()
-            conn.close()
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    SELECT id_usuario, nombre, apellido, email, rol_usuario
+                    FROM usuarios
+                    WHERE CAST(id_usuario AS TEXT) LIKE ? 
+                       OR nombre LIKE ? 
+                       OR apellido LIKE ? 
+                       OR email LIKE ?
+                    ORDER BY apellido, nombre
+                """, (like_term, like_term, like_term, like_term))
+                usuarios = cursor.fetchall()
 
+    # Si la petición es AJAX (por fetch o $.ajax), devolvemos solo la tabla
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        # Devuelve solo la tabla para insertar en AJAX
         return render_template('partials/admin/tabla_borrar_usuarios.html', usuarios=usuarios)
 
+    # Render normal
     return render_template('partials/admin/borrar-usuario.html', usuarios=usuarios, termino=termino)
+
 
 @partials_admin.route('/eliminar_usuario/<int:id_usuario>', methods=['POST'])
 @partials_admin.route('/eliminar-usuario/<int:id_usuario>', methods=['POST'])
 @rol_admin
 def eliminar_usuario(id_usuario):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM usuarios WHERE id_usuario = ?", (id_usuario,))
-    conn.commit()
-    conn.close()
-    flash("Usuario eliminado correctamente", "success")
-    return redirect(url_for('partials_admin.borrar_usuario'))
+    usuario_actual = session.get('id_usuario')
 
+    # Evita que el admin se borre a sí mismo
+    if usuario_actual == id_usuario:
+        flash("No puedes eliminar tu propio usuario.", "danger")
+        return redirect(url_for('partials_admin.borrar_usuario'))
+
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM usuarios WHERE id_usuario = ?", (id_usuario,))
+        filas_afectadas = cursor.rowcount
+        conn.commit()
+
+    if filas_afectadas == 0:
+        flash("El usuario no existe o ya fue eliminado.", "warning")
+    else:
+        flash("Usuario eliminado correctamente.", "success")
+
+    # Si la petición viene por AJAX, devolvemos JSON
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({"success": True, "message": "Usuario eliminado correctamente"})
+
+    return redirect(url_for('partials_admin.borrar_usuario'))
 
 
 
